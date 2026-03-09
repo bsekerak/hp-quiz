@@ -1,10 +1,5 @@
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true
-});
-
 const houseRobes = {
   Gryffindor: 'scarlet and gold Gryffindor school robes',
   Slytherin: 'emerald green and silver Slytherin school robes',
@@ -26,6 +21,11 @@ const characterDetails = {
 };
 
 export async function generateWizardingPortrait(userPhotoBase64, character) {
+  const openai = new OpenAI({
+    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true
+  });
+
   try {
     console.log('Step 1: Analyzing photo with GPT-4o Vision...');
 
