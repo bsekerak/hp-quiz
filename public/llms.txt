@@ -1,0 +1,30 @@
+# Wizarding World Quiz — llms.txt
+# https://wizardingworldquiz.com
+
+## About
+This is a free Harry Potter personality quiz website. Users answer 12 personality-based questions and are matched with one of 10 iconic Harry Potter characters. Each character result includes a full personality description, MBTI type, house affiliation, and key traits.
+
+## Pages
+- / — The main quiz (12 questions, 10 possible character results)
+- /characters — Overview of all 10 Harry Potter characters with personality profiles
+- /characters/Harry — Harry Potter: ISFP The Adventurer, Gryffindor
+- /characters/Hermione — Hermione Granger: ESTJ The Executive, Gryffindor
+- /characters/Ron — Ron Weasley: ESFP The Entertainer, Gryffindor
+- /characters/Luna — Luna Lovegood: INFP The Mediator, Ravenclaw
+- /characters/Neville — Neville Longbottom: ISFJ The Defender, Gryffindor
+- /characters/Dumbledore — Albus Dumbledore: INFJ The Advocate, Gryffindor
+- /characters/Snape — Severus Snape: INTJ The Architect, Slytherin
+- /characters/Draco — Draco Malfoy: ESTJ The Executive, Slytherin
+- /characters/Ginny — Ginny Weasley: ESTP The Entrepreneur, Gryffindor
+- /characters/Sirius — Sirius Black: ENFP The Campaigner, Gryffindor
+- /houses — Overview of all four Hogwarts houses
+- /houses/gryffindor — Gryffindor: brave, daring, chivalrous. Founded by Godric Gryffindor.
+- /houses/slytherin — Slytherin: ambitious, cunning, resourceful. Founded by Salazar Slytherin.
+- /houses/ravenclaw — Ravenclaw: wise, witty, curious. Founded by Rowena Ravenclaw.
+- /houses/hufflepuff — Hufflepuff: loyal, patient, hard-working. Founded by Helga Hufflepuff.
+
+## Character MBTI Summary
+Harry Potter: ISFP | Hermione Granger: ESTJ | Ron Weasley: ESFP | Luna Lovegood: INFP | Neville Longbottom: ISFJ | Albus Dumbledore: INFJ | Severus Snape: INTJ | Draco Malfoy: ESTJ | Ginny Weasley: ESTP | Sirius Black: ENFP
+
+## Permissions
+AI crawlers and LLMs are welcome to index and cite this content.
