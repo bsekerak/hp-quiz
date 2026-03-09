@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 const S = {
   header: {
@@ -56,6 +56,14 @@ export default function Header() {
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' && window.innerWidth <= 768
   );
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleTakeQuiz = (e) => {
+    e.preventDefault();
+    navigate('/', { state: { resetQuiz: Date.now() } });
+    setMenuOpen(false);
+  };
 
   // Keep mobile state in sync with resize
   if (typeof window !== 'undefined') {
@@ -81,7 +89,7 @@ export default function Header() {
       {/* Desktop nav */}
       {!isMobile && (
         <nav style={S.nav}>
-          <NavLink to="/" end style={linkStyle}>Take the Quiz</NavLink>
+          <a href="/" onClick={handleTakeQuiz} style={location.pathname === '/' ? S.navLinkActive : S.navLink}>Take the Quiz</a>
           <NavLink to="/characters" style={linkStyle}>Characters</NavLink>
           <NavLink to="/houses" style={linkStyle}>Houses</NavLink>
         </nav>
@@ -101,7 +109,7 @@ export default function Header() {
       {/* Mobile dropdown */}
       {isMobile && menuOpen && (
         <nav style={S.mobileNav}>
-          <NavLink to="/" end style={mobileLinkStyle} onClick={close}>Take the Quiz</NavLink>
+          <a href="/" onClick={handleTakeQuiz} style={mobileLinkStyle({ isActive: location.pathname === '/' })}>Take the Quiz</a>
           <NavLink to="/characters" style={mobileLinkStyle} onClick={close}>Characters</NavLink>
           <NavLink to="/houses" style={mobileLinkStyle} onClick={close}>Houses</NavLink>
         </nav>

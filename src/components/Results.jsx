@@ -10,7 +10,7 @@ const houseColors = {
   Hufflepuff: { primary: '#ECB939', secondary: '#000000', glow: 'rgba(236,185,57,0.25)' }
 };
 
-export default function Results({ character: characterProp }) {
+export default function Results({ character: characterProp, onRetake }) {
   const navigate = useNavigate();
   const cardRef = useRef(null);
 
@@ -508,7 +508,7 @@ export default function Results({ character: characterProp }) {
           Share My Result
         </button>
 
-        <button onClick={() => { localStorage.removeItem('quizResult'); navigate('/'); }} style={{
+        <button onClick={() => { localStorage.removeItem('quizResult'); onRetake ? onRetake() : navigate('/'); }} style={{
           background: 'transparent',
           border: '1px solid rgba(212,175,55,0.15)',
           color: 'rgba(245,230,200,0.45)',
