@@ -18,8 +18,9 @@ async function resizeImageToBase64(dataUrl, maxPx = 1024, quality = 0.82) {
 
 export async function generateWizardingPortrait(userPhotoBase64, character) {
   try {
-    // Resize photo to ≤1024px JPEG before sending — keeps body well under Vercel's 4.5MB limit
+    // Resize photo to ≤1024px JPEG — keeps body well under Vercel's 4.5MB limit
     const resized = await resizeImageToBase64(userPhotoBase64);
+    console.log('[portrait] Resized photo size (chars):', resized.length);
 
     const res = await fetch('/api/generate-portrait', {
       method: 'POST',
@@ -27,17 +28,20 @@ export async function generateWizardingPortrait(userPhotoBase64, character) {
       body: JSON.stringify({ photoBase64: resized, character }),
     });
 
+    console.log('[portrait] API response status:', res.status);
+
+    const data = await res.json().catch(() => null);
+    console.log('[portrait] API response data:', data);
+
     if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      console.error('Portrait API error:', res.status, err.error);
+      console.error('[portrait] API error:', res.status, data?.error);
       return null;
     }
 
-    const { url } = await res.json();
-    return url || null;
+    return data?.url || null;
 
   } catch (err) {
-    console.error('Portrait failed:', err?.message);
+    console.error('[portrait] fetch failed:', err?.message);
     return null;
   }
 }
