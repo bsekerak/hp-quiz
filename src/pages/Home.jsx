@@ -24,13 +24,20 @@ export default function Home() {
       setScreen('intro');
       setResultCharacter(null);
       localStorage.removeItem('quizResult');
+      // Clear the state so navigating back doesn't re-trigger the reset
+      window.history.replaceState({}, '');
     }
   }, [location.state?.resetQuiz]);
 
-  // Push a history entry when quiz starts so browser back returns to intro
+  // Push a history entry when quiz starts; handle browser back from both quiz and results
   useEffect(() => {
-    if (screen !== 'quiz') return;
-    window.history.pushState({ quizActive: true }, '');
+    if (screen === 'intro') return;
+
+    // Push a history entry only when entering quiz (so back = return to intro)
+    if (screen === 'quiz') {
+      window.history.pushState({ quizActive: true }, '');
+    }
+
     const handlePop = () => {
       setScreen('intro');
       setResultCharacter(null);

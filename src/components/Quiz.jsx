@@ -20,6 +20,13 @@ export default function Quiz({ questions, onComplete }) {
     }));
   }, []);
 
+  const handleGoBack = () => {
+    if (currentQuestionIndex === 0) return;
+    setCurrentQuestionIndex(prev => prev - 1);
+    setAllSelectedAnswers(prev => prev.slice(0, -1));
+    setSelectedAnswerIndex(null);
+  };
+
   const handleAnswerClick = (answerIndex) => {
     if (selectedAnswerIndex !== null) return;
     setSelectedAnswerIndex(answerIndex);
@@ -85,6 +92,27 @@ export default function Quiz({ questions, onComplete }) {
         position: 'relative',
         zIndex: 1,
       }}>
+
+        {/* Back button */}
+        {currentQuestionIndex > 0 && (
+          <button
+            onClick={handleGoBack}
+            disabled={selectedAnswerIndex !== null}
+            style={{
+              background: 'none', border: 'none',
+              color: 'rgba(212,175,55,0.6)',
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: '13px', letterSpacing: '1px',
+              cursor: selectedAnswerIndex !== null ? 'default' : 'pointer',
+              padding: '0 0 12px 0',
+              display: 'flex', alignItems: 'center', gap: '6px',
+              opacity: selectedAnswerIndex !== null ? 0.4 : 1,
+              transition: 'opacity 200ms ease',
+            }}
+          >
+            ← Back
+          </button>
+        )}
 
         {/* Progress bar */}
         <div style={{

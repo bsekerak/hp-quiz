@@ -231,7 +231,9 @@ export default function Results({ character: characterProp, onRetake }) {
       paddingTop: '88px',
       paddingBottom: '60px',
       paddingLeft: '16px',
-      paddingRight: '16px'
+      paddingRight: '16px',
+      position: 'relative',
+      zIndex: 1,
     }}>
 
       {/* ── IDENTITY CARD (captured for PDF) ── */}
@@ -469,7 +471,7 @@ export default function Results({ character: characterProp, onRetake }) {
       )}
 
       {/* ── ACTION BUTTONS ── */}
-      <div style={{ maxWidth: '780px', width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={{ maxWidth: '780px', width: '100%', display: 'flex', flexDirection: 'column', gap: '12px', position: 'relative', zIndex: 10 }}>
 
         <button onClick={handleDownloadPDF} disabled={pdfGenerating} style={{
           background: '#D4AF37', color: '#0A0A1A',
@@ -508,7 +510,7 @@ export default function Results({ character: characterProp, onRetake }) {
           Share My Result
         </button>
 
-        <button onClick={() => { localStorage.removeItem('quizResult'); onRetake ? onRetake() : navigate('/'); }} style={{
+        <button type="button" onClick={() => { localStorage.removeItem('quizResult'); if (onRetake) { onRetake(); } else { navigate('/'); } }} style={{
           background: 'transparent',
           border: '1px solid rgba(212,175,55,0.15)',
           color: 'rgba(245,230,200,0.45)',

@@ -1,12 +1,6 @@
 import OpenAI from 'openai';
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
-  },
-};
+export const maxDuration = 60;
 
 const houseRobes = {
   Gryffindor: 'scarlet and gold Gryffindor school robes',
@@ -39,7 +33,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing photoBase64 or character' });
   }
 
-  const apiKey = process.env.VITE_OPENAI_API_KEY || process.env.OPENAI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY || process.env.VITE_OPENAI_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: 'OpenAI API key not configured' });
   }
@@ -67,6 +61,7 @@ export default async function handler(req, res) {
     });
 
     const appearance = visionRes.choices[0].message.content;
+    console.log('[generate-portrait] Appearance:', appearance);
 
     const robes = houseRobes[character.house] || 'dark wizard robes';
     const extras = characterDetails[character.name] || '';
@@ -80,20 +75,24 @@ Character details: ${extras}
 
 Style: painterly storybook illustration, semi-realistic, magical warm glow, NOT photographic. No text, no borders.`;
 
-    // Step 2: Generate portrait with DALL-E 3
+    // Step 2: Generate portrait with DALL-E 3, return base64 so it never expires
     const imgRes = await openai.images.generate({
       model: 'dall-e-3',
       prompt,
       size: '1024x1024',
       quality: 'standard',
+      response_format: 'b64_json',
       n: 1,
     });
 
-    const url = imgRes.data[0].url;
+    const b64 = imgRes.data[0].b64_json;
+    if (!b64) throw new Error('No image data returned from OpenAI');
+
+    const url = `data:image/png;base64,${b64}`;
     return res.status(200).json({ url });
 
   } catch (err) {
-    console.error('Portrait API error:', err?.message);
+    console.error('[generate-portrait] error:', err?.message);
     return res.status(500).json({ error: err?.message || 'Portrait generation failed' });
   }
 }
